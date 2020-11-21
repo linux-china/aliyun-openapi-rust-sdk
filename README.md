@@ -13,3 +13,4 @@ You can access Alibaba Cloud services without the need to handle API related tas
 # References
 
 * reqwest: https://github.com/seanmonstar/reqwest
+* Serde: https://serde.rs/
