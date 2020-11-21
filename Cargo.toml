@@ -1,0 +1,23 @@
+[package]
+name = "aliyun-openapi-rust-sdk"
+version = "0.1.0"
+edition = "2018"
+authors = ["linux_china <libing.chen@gmail.com>"]
+description = "Alibaba Cloud SDK for Rust"
+keywords = ["aliyun", "SDK"]
+categories = ["network-programming"]
+documentation = "https://github.com/linux-china/aliyun-openapi-rust-sdk"
+readme = "README.md"
+homepage = "https://github.com/linux-china/aliyun-openapi-rust-sdk"
+repository = "https://github.com/linux-china/aliyun-openapi-rust-sdk"
+license = "Apache-2.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+futures = "0.3.5"
+tokio = { version = "0.2.22", features = ["full"] }
+reqwest = { version = "0.10" }
+serde = { version = "1.0.116", features = ["derive"] }
+serde_json = { version = "1.0", default-features = false, features = ["alloc"] }
+anyhow = "1.0"
