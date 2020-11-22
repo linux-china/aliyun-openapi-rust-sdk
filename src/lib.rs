@@ -1,3 +1,6 @@
+mod credential;
+
+
 #[cfg(test)]
 mod tests {
     #[test]
