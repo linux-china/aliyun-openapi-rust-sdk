@@ -10,10 +10,11 @@ use crypto::mac::Mac;
 use base64::encode as encode_base64;
 
 lazy_static! {
-    pub static ref PROFILE: Profile = {
+     static ref PROFILE: Profile = {
         let profile = load_default_profile();
         profile
     };
+    static ref CONTENT_MD5: HeaderName = "Content-MD5".parse().unwrap();
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -39,20 +40,19 @@ pub fn load_default_profile() -> Profile {
     return (*x).clone();
 }
 
+
+fn get_header_value<'a>(headers: &'a HeaderMap, name: &HeaderName) -> &'a str {
+    return headers
+        .get(name)
+        .and_then(|header_value| Some(header_value.to_str().unwrap_or_default()))
+        .unwrap_or_default();
+}
+
 /// Aliyun OSS security signature by https://help.aliyun.com/document_detail/31951.html
 pub fn oss_sign_header(verb: &str, bucket: &str, object: &str, headers: &HeaderMap) -> String {
-    let date = headers
-        .get(DATE)
-        .and_then(|d| Some(d.to_str().unwrap_or_default()))
-        .unwrap_or_default();
-    let content_type = headers
-        .get(CONTENT_TYPE)
-        .and_then(|c| Some(c.to_str().unwrap_or_default()))
-        .unwrap_or_default();
-    let content_md5 = headers
-        .get("Content-MD5")
-        .and_then(|md5| Some(encode_base64(md5.to_str().unwrap_or_default())))
-        .unwrap_or_default();
+    let date = get_header_value(headers, &DATE);
+    let content_type = get_header_value(headers, &CONTENT_TYPE);
+    let content_md5 = get_header_value(headers, &CONTENT_MD5);
     let mut oss_headers: Vec<(&HeaderName, &HeaderValue)> = headers
         .iter()
         .filter(|(k, _)| k.as_str().contains("x-oss-"))
