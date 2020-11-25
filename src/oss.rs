@@ -1,6 +1,6 @@
 use reqwest::header::{HeaderMap, DATE};
 use chrono::prelude::*;
-use crate::credential::oss_sign;
+use crate::auth::oss_sign_header;
 use bytes::Bytes;
 
 pub struct OSS<'a> {
@@ -15,7 +15,7 @@ impl<'a> OSS<'a> {
         let now = Utc::now().format("%a, %d %b %Y %T GMT").to_string();
         headers.insert(DATE, now.parse().unwrap());
         // Authorization http header
-        let authorization = oss_sign("GET", bucket, object, &headers);
+        let authorization = oss_sign_header("GET", bucket, object, &headers);
         headers.insert("Authorization", authorization.parse().unwrap());
         // request
         let url = format!("https://{}.{}/{}", bucket, endpoint, object);

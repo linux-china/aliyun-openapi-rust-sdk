@@ -1,4 +1,4 @@
-mod credential;
+mod auth;
 mod oss;
 
 pub use oss::OSS;
