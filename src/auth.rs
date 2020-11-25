@@ -9,7 +9,6 @@ use crypto::hmac::Hmac;
 use crypto::mac::Mac;
 use base64::encode as encode_base64;
 
-
 lazy_static! {
     pub static ref PROFILE: Profile = {
         let profile = load_default_profile();
@@ -41,7 +40,7 @@ pub fn load_default_profile() -> Profile {
 }
 
 /// Aliyun OSS security signature by https://help.aliyun.com/document_detail/31951.html
-pub fn oss_sign(verb: &str, bucket: &str, object: &str, headers: &HeaderMap) -> String {
+pub fn oss_sign_header(verb: &str, bucket: &str, object: &str, headers: &HeaderMap) -> String {
     let date = headers
         .get(DATE)
         .and_then(|d| Some(d.to_str().unwrap_or_default()))
@@ -80,8 +79,8 @@ pub fn oss_sign(verb: &str, bucket: &str, object: &str, headers: &HeaderMap) -> 
 
 #[cfg(test)]
 mod tests {
-    use crate::credential::{load_default_profile, oss_sign};
-    use crate::credential::PROFILE;
+    use crate::auth::{load_default_profile, oss_sign_header};
+    use crate::auth::PROFILE;
     use reqwest::header::{HeaderMap};
 
     #[test]
@@ -98,7 +97,7 @@ mod tests {
     #[test]
     fn test_sign() {
         let headers = HeaderMap::new();
-        let signature = oss_sign("GET", "bucket-1", "", &headers);
+        let signature = oss_sign_header("GET", "bucket-1", "", &headers);
         println!("{}", signature);
     }
 }
