@@ -1,10 +1,7 @@
 mod credential;
+mod oss;
 
+pub use oss::OSS;
 
 #[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
-}
+mod tests {}
