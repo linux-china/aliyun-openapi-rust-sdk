@@ -40,6 +40,7 @@ pub fn load_default_profile() -> Profile {
     return (*x).clone();
 }
 
+/// Aliyun OSS security signature by https://help.aliyun.com/document_detail/31951.html
 pub fn oss_sign(verb: &str, bucket: &str, object: &str, headers: &HeaderMap) -> String {
     let date = headers
         .get(DATE)
