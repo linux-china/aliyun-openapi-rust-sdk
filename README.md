@@ -20,7 +20,7 @@ The Alibaba Cloud SDK for Rust allows you to access Alibaba Cloud services such 
 You can access Alibaba Cloud services without the need to handle API related tasks, such as signing and constructing your requests.
 
 # How to start?
-Please install aliyun command line from https://github.com/aliyun/aliyun-cli, then config the credential info.
+Please install aliyun command line from https://github.com/aliyun/aliyun-cli first, then config the credential info with following command:
 
 ```
 $ aliyun configure
