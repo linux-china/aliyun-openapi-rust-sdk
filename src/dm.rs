@@ -5,11 +5,17 @@ const API_VERSION: &str = "2015-11-23";
 /// Simple Email
 #[derive(Debug, Default)]
 pub struct SimpleMail<'a> {
+    /// same as service account on DM console
     from: &'a str,
+    /// from alias, such as Customer Support, Admin
     from_alias: &'a str,
+    /// receiver email
     to: &'a str,
+    /// email subject
     subject: &'a str,
+    /// html body
     html_body: &'a str,
+    /// text body
     text_body: &'a str,
 }
 
