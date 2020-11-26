@@ -16,7 +16,7 @@
 
 </p>
 
-The Alibaba Cloud SDK for Rust allows you to access Alibaba Cloud services such as Elastic Compute Service (ECS), Server Load Balancer (SLB), and CloudMonitor.  
+The Alibaba Cloud SDK for Rust allows you to access Alibaba Cloud services such as Elastic Compute Service (ECS), Object Storage Service(OSS), Direct Mail (DM) etc.  
 You can access Alibaba Cloud services without the need to handle API related tasks, such as signing and constructing your requests.
 
 # How to start?
