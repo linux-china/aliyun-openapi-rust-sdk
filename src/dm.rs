@@ -51,7 +51,7 @@ mod tests {
             from_alias: "MicroServicesClub",
             subject: "this is hello",
             to_address: "libing.chen@gmail.com",
-            html_body: "This is hello!",
+            html_body: "<p>This is hello!</p>",
             text_body: "This is hello!",
         };
         let endpoint = "dm.aliyuncs.com";
