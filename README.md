@@ -20,7 +20,7 @@ $ aliyun configure
 # Aliyun
 
 * Region endpoints: https://api.aliyun.com/#/region
-* 签名验证： https://help.aliyun.com/document_detail/31951.html
+* Auth Signature：  https://help.aliyun.com/document_detail/31951.html  https://www.alibabacloud.com/help/zh/doc-detail/25492.htm
 * oss-rust-sdk: https://github.com/NoXF/oss-rust-sdk
 
 # References
