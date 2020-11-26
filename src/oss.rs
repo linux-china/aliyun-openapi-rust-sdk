@@ -14,6 +14,7 @@ use bytes::Bytes;
 /// let ref http_client = reqwest::Client::new();
 /// let oss = OSS { endpoint, http_client };
 /// ```
+#[doc(alias = "oss")]
 pub struct OSS<'a> {
     /// endpoint, such as `oss-cn-hangzhou.aliyuncs.com`
     pub endpoint: &'a str,
