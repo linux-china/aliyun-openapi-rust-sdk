@@ -3,7 +3,7 @@ use chrono::prelude::*;
 use crate::auth::oss_sign_header;
 use bytes::Bytes;
 
-/// Aliyun OSS Client
+/// Object Storage Service(OSS) https://cn.aliyun.com/product/oss
 /// 
 /// # Examples
 ///

@@ -2,6 +2,7 @@ use crate::auth::sign_url;
 
 const API_VERSION: &str = "2015-11-23";
 
+/// Simple Email
 #[derive(Debug, Default)]
 pub struct SimpleMail<'a> {
     account_name: &'a str,
@@ -12,7 +13,7 @@ pub struct SimpleMail<'a> {
     text_body: &'a str,
 }
 
-/// 邮件推送  https://help.aliyun.com/product/29412.html
+/// Direct Mail(DM)  https://cn.aliyun.com/product/directmail
 #[doc(alias = "mail")]
 pub struct DM<'a> {
     /// endpoint, such as `dm.aliyuncs.com`
