@@ -3,7 +3,17 @@ use chrono::prelude::*;
 use crate::auth::oss_sign_header;
 use bytes::Bytes;
 
-/// OSS
+/// Aliyun OSS Client
+/// 
+/// # Examples
+///
+/// ```rust
+/// use aliyun_openapi_rust_sdk::OSS;
+///
+/// let endpoint = "oss-cn-hangzhou.aliyuncs.com";
+/// let ref http_client = reqwest::Client::new();
+/// let oss = OSS { endpoint, http_client };
+/// ```
 pub struct OSS<'a> {
     /// endpoint, such as `oss-cn-hangzhou.aliyuncs.com`
     pub endpoint: &'a str,
