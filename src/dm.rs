@@ -1,6 +1,4 @@
-use crate::utils::url_encode;
 use crate::auth::sign_url;
-use reqwest::header::{HeaderMap, CONTENT_TYPE};
 
 const API_VERSION: &str = "2015-11-23";
 
