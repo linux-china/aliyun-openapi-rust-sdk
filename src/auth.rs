@@ -7,7 +7,9 @@ use reqwest::header::{HeaderMap, HeaderName, HeaderValue};
 use crypto::sha1::Sha1;
 use crypto::hmac::Hmac;
 use crypto::mac::Mac;
-use base64::encode as encode_base64;
+use chrono::prelude::*;
+use crate::utils::url_encode;
+
 
 lazy_static! {
      static ref PROFILE: Profile = {
@@ -16,6 +18,12 @@ lazy_static! {
     };
     static ref CONTENT_MD5: HeaderName = "Content-MD5".parse().unwrap();
 }
+
+const ALIYUN_OPENAPI_DEFAULT_PARAMS: &[(&str, &str)] = &[
+    ("Format", "JSON"),
+    ("SignatureMethod", "HMAC-SHA1"),
+    ("SignatureVersion", "1.0"),
+];
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Config {
@@ -67,20 +75,59 @@ pub fn oss_sign_header(verb: &str, bucket: &str, object: &str, headers: &HeaderM
         );
     }
     let oss_resource = format!("/{}/{}", bucket, object);
-    let sign_str = format!(
+    let text = format!(
         "{}\n{}\n{}\n{}\n{}{}",
         verb, content_md5, content_type, date, oss_headers_str, oss_resource
     );
-    let mut hasher = Hmac::new(Sha1::new(), PROFILE.access_key_secret.as_bytes());
-    hasher.input(sign_str.as_bytes());
-    let sign_str_base64 = encode_base64(hasher.result().code());
-    format!("OSS {}:{}", PROFILE.access_key_id, sign_str_base64)
+    let signature = sign_base64(&PROFILE.access_key_secret, &text);
+    format!("OSS {}:{}", PROFILE.access_key_id, signature)
+}
+
+/// sign url
+pub fn sign_url(http_method: &str, endpoint: &str, version: &str,
+                action: &str, queries: &[(&str, &str)]) -> String {
+    let nonce = Local::now().timestamp_subsec_nanos().to_string();
+    let ts = Utc::now().format("%Y-%m-%dT%H:%M:%SZ").to_string();
+    // build request params.
+    let mut params = Vec::from(ALIYUN_OPENAPI_DEFAULT_PARAMS);
+    params.push(("Action", &action));
+    params.push(("AccessKeyId", &PROFILE.access_key_id));
+    params.push(("SignatureNonce", &nonce));
+    params.push(("Timestamp", &ts));
+    params.push(("Version", version));
+    params.extend_from_slice(&queries);
+    params.sort_by_key(|item| item.0);
+    // encode request params to pairs
+    let pairs: Vec<String> = params
+        .into_iter()
+        .map(|(k, v)| format!("{}={}", url_encode(k), url_encode(v)))
+        .collect();
+    let sorted_query = pairs.join("&");
+    let string_to_sign = format!(
+        "{}&{}&{}",
+        http_method,
+        url_encode("/"),
+        url_encode(&sorted_query)
+    );
+    // sign params, get final request url.
+    let sign = sign_base64(&format!("{}&", &PROFILE.access_key_secret), &string_to_sign);
+    let signature = url_encode(&sign);
+    format!(
+        "https://{}?Signature={}&{}",
+        endpoint, signature, sorted_query
+    )
+}
+
+/// signed and encoded with base64
+fn sign_base64(key_secret: &str, body: &str) -> String {
+    let mut mac = Hmac::new(Sha1::new(), key_secret.as_bytes());
+    mac.input(body.as_bytes());
+    base64::encode(mac.result().code())
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::auth::{load_default_profile, oss_sign_header};
-    use crate::auth::PROFILE;
+    use crate::auth::{PROFILE, load_default_profile, oss_sign_header, sign_url};
     use reqwest::header::{HeaderMap};
 
     #[test]
@@ -95,10 +142,18 @@ mod tests {
     }
 
     #[test]
-    fn test_sign() {
+    fn test_oss_sign() {
         let headers = HeaderMap::new();
         let signature = oss_sign_header("GET", "bucket-1", "", &headers);
         println!("{}", signature);
+    }
+
+    #[test]
+    fn test_sign_url() {
+        let params: Vec<(&str, &str)> = Vec::new();
+        let url = sign_url("POST", "dm.aliyuncs.com", "2015-11-23",
+                           "SingleSendMail", params.as_ref());
+        println!("{}", url);
     }
 }
 
