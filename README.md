@@ -2,9 +2,16 @@
 <a href=" https://www.alibabacloud.com"><img src="https://aliyunsdk-pages.alicdn.com/icons/AlibabaCloud.svg"></a>
 </p>
 
-<h1 align="center">Alibaba Cloud SDK for Rust</h1>
+<h1 align="center">Alibaba Cloud OpenAPI SDK for Rust</h1>
 
 <p align="center">
+  <a href="https://github.com/linux-china/aliyun-openapi-rust-sdk/actions">
+    <img alt="Github Actions" src="https://img.shields.io/github/workflow/status/linux-china/aliyun-openapi-rust-sdk/Rust">
+  </a>
+  <a href="https://crates.io/crates/aliyun-openapi">
+    <img alt="Crate" src="https://img.shields.io/crates/v/aliyun-openapi">
+  </a>
+
 </p>
 
 The Alibaba Cloud SDK for Rust allows you to access Alibaba Cloud services such as Elastic Compute Service (ECS), Server Load Balancer (SLB), and CloudMonitor.  
