@@ -2,7 +2,7 @@ mod utils;
 mod auth;
 mod oss;
 mod dm;
-mod prelude;
+pub mod prelude;
 
 
 #[cfg(test)]
