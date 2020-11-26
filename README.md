@@ -44,13 +44,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 ```
 
-# Aliyun
-
-* Region endpoints: https://api.aliyun.com/#/region
-* Auth Signature：  https://help.aliyun.com/document_detail/31951.html  https://www.alibabacloud.com/help/zh/doc-detail/25492.htm
-* oss-rust-sdk: https://github.com/NoXF/oss-rust-sdk
-
 # References
 
-* reqwest: https://github.com/seanmonstar/reqwest
-* Serde: https://serde.rs/
+* Alibaba Cloud: https://us.alibabacloud.com/
+* Aliyun OpenAPI Explorer: https://api.aliyun.com/
