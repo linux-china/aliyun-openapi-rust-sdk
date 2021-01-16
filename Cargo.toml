@@ -1,6 +1,6 @@
 [package]
 name = "aliyun-openapi"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2018"
 authors = ["linux_china <libing.chen@gmail.com>"]
 description = "Alibaba Cloud OpenAPI SDK for Rust"
