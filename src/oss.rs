@@ -90,7 +90,6 @@ impl<'a> OSS<'a> {
 mod tests {
     use crate::oss::OSS;
     use std::str::from_utf8;
-    use bytes::Buf;
 
     #[tokio::test]
     async fn test_get_object() -> Result<(), Box<dyn std::error::Error>> {
@@ -98,7 +97,7 @@ mod tests {
         let ref http_client = reqwest::Client::new();
         let oss = OSS { endpoint, http_client };
         let bytes = oss.get_object("eren-assets", "hello.txt").await?;
-        print!("object: {}", from_utf8(bytes.bytes()).unwrap());
+        print!("object: {}", from_utf8(bytes.as_ref()).unwrap());
         Ok(())
     }
 
