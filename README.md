@@ -31,7 +31,7 @@ $ aliyun configure
 ```rust
 use aliyun_openapi::prelude::*;
 use std::str::from_utf8;
-use bytes::{Bytes, Buf};
+use bytes::Bytes;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -39,7 +39,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let ref http_client = reqwest::Client::new();
     let oss = OSS { endpoint, http_client };
     let bytes: Bytes = oss.get_object("eren-assets", "hello.txt").await?;
-    print!("object: {}", from_utf8(bytes.bytes()).unwrap());
+    print!("object: {}", from_utf8(bytes.as_ref()).unwrap());
     Ok(())
 }
 ```
